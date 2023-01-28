@@ -38,9 +38,10 @@ ui_classes: list[type] = []
 def register():
     global ui_classes
     try:
-        from . import core
+        from . import core, lifegame
 
         importlib.reload(core)
+        importlib.reload(lifegame)
         ui_classes[:] = core.ui_classes
     except (ModuleNotFoundError, AttributeError):
         ui_classes[:] = []

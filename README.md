@@ -1,19 +1,27 @@
-## Blender Add-on: DiffObj
+## Blender Add-on: LifeGame
 
-Select the different vertices of 2 objects.
+Play the life game.
 
 ## Installation
 
-- Download https://github.com/SaitoTsutomu/DiffObj/archive/refs/heads/master.zip
+- Download https://github.com/SaitoTsutomu/LifeGame/archive/refs/heads/master.zip
 - Start Blender.
 - Edit menu -> Preferences
   - Select the "Add-ons" tab.
   - Press the "Install ...".
   - Select the downloaded ZIP file and press the button "Install Add-on".
-  - Check the "Object: DiffObj".
+  - Check the "Object: LifeGame".
 
 ## Usage
 
-- Select two objects.
 - Show the sidebar and select the Edit tab.
-- Push "Select Diff 2 Obj".
+
+### Play sample
+
+- Push "Make Sample".
+
+### Play customu
+
+- Set X and Y, then Push "Make Grid".
+- In EditMode, select some vertex.
+- In ObjectMode, Set NCycle and Unit, then Push "Make Anim".

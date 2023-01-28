@@ -3,55 +3,66 @@ import bpy
 from .register_class import _get_cls, operator
 
 
-class CDO_OT_diff_obj(bpy.types.Operator):
-    """2つのオブジェクトの異なる点を選択"""
+class CLG_OT_make_sample(bpy.types.Operator):
+    """サンプル作成"""
 
-    bl_idname = "object.diff_obj"
-    bl_label = "Select Diff 2 Obj"
-    bl_description = "Select the different vertices of 2 objects."
-
-    limit: bpy.props.IntProperty() = bpy.props.IntProperty(default=1000)  # type: ignore
+    bl_idname = "object.make_sample"
+    bl_label = "Make Sample"
+    bl_description = "Make sample."
 
     def execute(self, context):
-        objs = [obj for obj in context.selected_objects if obj.type == "MESH"]
-        if len(objs) != 2:
-            self.report({"INFO"}, "Select 2 objects.")
-            return {"CANCELLED"}
-        bpy.ops.object.mode_set(mode="EDIT")  # for deselect
-        bpy.ops.mesh.select_mode(type="VERT")
-        bpy.ops.mesh.select_all(action="DESELECT")
-        bpy.ops.object.mode_set(mode="OBJECT")  # for select
-        dif = set(tuple(vtx.co) for vtx in objs[0].data.vertices) ^ set(
-            tuple(vtx.co) for vtx in objs[1].data.vertices
-        )
-        for obj in objs:
-            count = 0
-            for i, vtx in enumerate(obj.data.vertices):
-                if tuple(vtx.co) in dif:
-                    if count >= self.limit:
-                        break
-                    count += 1
-                    obj.data.vertices[i].select = True
-        bpy.ops.object.mode_set(mode="EDIT")  # for confirm
-        # show wireframe
-        for area in bpy.context.screen.areas:
-            if area.type == "VIEW_3D":
-                for space in area.spaces:
-                    if space.type == "VIEW_3D":
-                        space.shading.type = "WIREFRAME"
         return {"FINISHED"}
 
 
-class CDO_PT_bit(bpy.types.Panel):
-    bl_label = "DiffObj"
+class CLG_OT_make_grid(bpy.types.Operator):
+    """格子作成"""
+
+    bl_idname = "object.make_grid"
+    bl_label = "Make Grid"
+    bl_description = "Make grid."
+
+    x: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore
+    y: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore
+
+    def execute(self, context):
+        return {"FINISHED"}
+
+
+class CLG_OT_make_anim(bpy.types.Operator):
+    """アニメーション作成"""
+
+    bl_idname = "object.make_anim"
+    bl_label = "Make Anim"
+    bl_description = "make animation."
+
+    ncycle: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore
+    unit: bpy.props.IntProperty() = bpy.props.IntProperty(default=5)  # type: ignore
+
+    def execute(self, context):
+        bpy.ops.screen.animation_play()
+        return {"FINISHED"}
+
+
+class CLG_PT_bit(bpy.types.Panel):
+    bl_label = "LifeGame"
     bl_space_type = "VIEW_3D"
     bl_region_type = "UI"
     bl_category = "Edit"
 
     def draw(self, context):
-        self.layout.prop(context.scene, "limit", text="Limit")
-        prop = operator(self.layout, CDO_OT_diff_obj)
-        prop.limit = context.scene.limit
+        operator(self.layout, CLG_OT_make_sample)
+        self.layout.separator()
+        self.layout.prop(context.scene, "x", text="X")
+        self.layout.prop(context.scene, "y", text="Y")
+        prop = operator(self.layout, CLG_OT_make_grid)
+        prop.x = context.scene.x
+        prop.y = context.scene.y
+        self.layout.separator()
+        self.layout.prop(context.scene, "ncycle", text="NCycle")
+        self.layout.prop(context.scene, "unit", text="Unit")
+        prop = operator(self.layout, CLG_OT_make_anim)
+        prop.ncycle = context.scene.ncycle
+        prop.unit = context.scene.unit
 
 
 # __init__.pyで使用

@@ -47,20 +47,20 @@ def make_anim(context, obj, nx, ny, ncycle, unit):
         cells[y + 1, x + 1] = vtx[y, x].select
     ss = [slice(None, -2), slice(1, -1), slice(2, None)]  # 前中後用のスライス
     sc = ss[1]  # 中央用のスライス
+    context.scene.frame_current = 1
     context.scene.frame_end = ncycle * unit + 1
     for tm in range(ncycle + 1):
         context.scene.frame_current = tm * unit + 1
         for y, x in product(range(ny), range(nx)):
             pre, nxt = vtx[y, x].co.z, cells[y + 1, x + 1] * 0.5
             if tm == 0 or (nxt != pre):
-                if tm and unit > 1:
-                    vtx[y, x].keyframe_insert("co", frame=context.scene.frame_current - 1, index=2)
+                if tm:
+                    vtx[y, x].keyframe_insert("co", frame=tm * unit + 0.5, index=2)
                 vtx[y, x].co.z = nxt
-                vtx[y, x].keyframe_insert("co", index=2)
+                vtx[y, x].keyframe_insert("co", frame=tm * unit + 1, index=2)
         cum = np.sum([cells[s1, s2] for s1 in ss for s2 in ss if s1 != sc or s2 != sc], 0)
         n2, n3 = cum == 2, cum == 3
         cells[sc, sc] = cells[sc, sc] & n2 | n3
-    context.scene.frame_current = 1
     bpy.ops.screen.animation_play()
 
 

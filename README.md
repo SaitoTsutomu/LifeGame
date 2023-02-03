@@ -25,3 +25,5 @@ Play the life game.
 - Set X and Y, then Push "Make Grid".
 - In EditMode, select some vertex.
 - In ObjectMode, Set NCycle and Unit, then Push "Make Anim".
+
+https://qiita.com/SaitoTsutomu/items/711989ba3e5ebcb78730

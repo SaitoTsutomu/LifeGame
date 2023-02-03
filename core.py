@@ -18,14 +18,14 @@ def add_geometry(obj: bpy.types.Object) -> None:
     node_group.inputs.new("NodeSocketGeometry", "Geometry")
     node_group.outputs.new("NodeSocketGeometry", "Geometry")
     ss = (
-        "NodeGroupInput NodeGroupOutput GeometryNodeInstanceOnPoints GeometryNodeInputPosition "
-        "ShaderNodeSeparateXYZ FunctionNodeCompare GeometryNodeMeshCube"
+        "NodeGroupInput NodeGroupOutput GeometryNodeInstanceOnPoints "
+        "GeometryNodeInputPosition ShaderNodeSeparateXYZ GeometryNodeMeshCube"
     ).split()
     nds = [node_group.nodes.new(s) for s in ss]
-    lks = [[0, 2], [2, 1], [3, 4], [24, 5], [5, 12], [6, 22], [2, 1]]
+    lks = [[0, 2], [2, 1], [3, 4], [24, 12], [5, 22], [2, 1]]
     for i, j in lks:
         node_group.links.new(nds[i % 10].outputs[i // 10], nds[j % 10].inputs[j // 10])
-    poss = [[80, 40], [410, 40], [250, 40], [-240, -99], [-80, -99], [80, -99], [-400, -28]]
+    poss = [[80, 40], [410, 40], [250, 40], [-80, -99], [80, -99], [-240, -28]]
     for nd, pos in zip(nds, poss):
         nd.location = pos
 

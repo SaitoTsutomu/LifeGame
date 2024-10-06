@@ -20,7 +20,7 @@ Play the life game.
 
 - Push "Make Sample".
 
-### Play customu
+### Play custom
 
 - Set X and Y, then Push "Make Grid".
 - In EditMode, select some vertex.

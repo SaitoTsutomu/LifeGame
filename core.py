@@ -97,8 +97,8 @@ class CLG_OT_make_grid(bpy.types.Operator):
     bl_label = "Make Grid"
     bl_description = "Make grid."
 
-    nx: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)
-    ny: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)
+    nx: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore[valid-type]
+    ny: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore[valid-type]
 
     def execute(self, context):
         make_grid(context, self.nx, self.ny)
@@ -112,8 +112,8 @@ class CLG_OT_make_anim(bpy.types.Operator):
     bl_label = "Make Anim"
     bl_description = "make animation."
 
-    n_cycle: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)
-    unit: bpy.props.IntProperty() = bpy.props.IntProperty(default=5)
+    n_cycle: bpy.props.IntProperty() = bpy.props.IntProperty(default=10)  # type: ignore[valid-type]
+    unit: bpy.props.IntProperty() = bpy.props.IntProperty(default=5)  # type: ignore[valid-type]
 
     def execute(self, context):
         nx, ny = context.scene.nx, context.scene.ny

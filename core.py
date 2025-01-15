@@ -18,10 +18,14 @@ def add_geometry(obj: bpy.types.Object) -> None:
     modifier.node_group.is_modifier = True
     node_tree.interface.new_socket("Instances", in_out="OUTPUT", socket_type="NodeSocketGeometry")
     node_tree.interface.new_socket("Instance", in_out="INPUT", socket_type="NodeSocketGeometry")
-    ss = (
-        "NodeGroupInput NodeGroupOutput GeometryNodeInstanceOnPoints "
-        "GeometryNodeInputPosition ShaderNodeSeparateXYZ GeometryNodeMeshCube"
-    ).split()
+    ss = [
+        "NodeGroupInput",
+        "NodeGroupOutput",
+        "GeometryNodeInstanceOnPoints",
+        "GeometryNodeInputPosition",
+        "ShaderNodeSeparateXYZ",
+        "GeometryNodeMeshCube",
+    ]
     nds = [node_tree.nodes.new(s) for s in ss]
     lks = [[0, 2], [2, 1], [3, 4], [24, 12], [5, 22], [2, 1]]
     for i, j in lks:
@@ -84,7 +88,7 @@ class CLG_OT_make_sample(bpy.types.Operator):
         for y, x in product(range(2), range(6)):
             bm.verts[x + 15 * y + 48].select = bm.verts[x + 15 * y + 156].select = True
             bm.verts[15 * x + y + 93].select = bm.verts[15 * x + y + 55].select = True
-        # bm.free()
+        # bm.free()  # noqa: ERA001
         bpy.ops.object.mode_set(mode="OBJECT")
         make_anim(context, obj, sc.nx, sc.ny, sc.n_cycle, sc.unit)
         return {"FINISHED"}
